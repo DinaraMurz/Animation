@@ -25,50 +25,17 @@ namespace ProgressbarDesignHw
         {
             InitializeComponent();
 
-            DateTime dateTime = new DateTime();
-            double loadTime = 3;
-
-            DoubleAnimation animation = new DoubleAnimation
-            {
-                From = greenRectangle.Width,
-                To = greenRectangle.Width + 400,
-                Duration = new Duration(TimeSpan.FromSeconds(loadTime)),
-                //RepeatBehavior = RepeatBehavior.Forever,
-                //AutoReverse = true
-            };
-
-            Storyboard storyboard = new Storyboard();
-            storyboard.Children.Add(animation);
-            Storyboard.SetTargetName(animation, greenRectangle.Name);
-            Storyboard.SetTargetProperty(animation, new PropertyPath(Rectangle.WidthProperty));
-            storyboard.Begin(this);
-            dateTime = DateTime.Now;
-
-            if (dateTime >= DateTime.Now.AddSeconds(3))
-            {
-                MessageBox.Show("dfdg");
-            }
-
+            DoubleAnimation rectangleAnimation = new DoubleAnimation();
+            rectangleAnimation.From = greenRectangle.ActualWidth;
+            rectangleAnimation.To = 400;
+            rectangleAnimation.Duration = TimeSpan.FromSeconds(5);
+            rectangleAnimation.Completed += ButtonAnimation_Completed;
+            greenRectangle.BeginAnimation(Button.WidthProperty, rectangleAnimation);
         }
 
-        public void Storyboard_Completed(object sender, EventArgs e)
+        private void ButtonAnimation_Completed(object sender, EventArgs e)
         {
-           
-
-            DoubleAnimation animationS = new DoubleAnimation
-            {
-                From = greenRectangle.Width,
-                To = greenRectangle.Width + 20,
-                Duration = new Duration(TimeSpan.FromSeconds(5))
-                //RepeatBehavior = RepeatBehavior.Forever,
-                //AutoReverse = true
-            };
-
-            Storyboard storyboardS = new Storyboard();
-            storyboardS.Children.Add(animationS);
-            Storyboard.SetTargetName(animationS, greenRectangle.Name);
-            Storyboard.SetTargetProperty(animationS, new PropertyPath(Rectangle.WidthProperty));
-            storyboardS.Begin(this);
+            MessageBox.Show("Анимация завершена");
         }
     }
 }
